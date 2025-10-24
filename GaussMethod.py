@@ -26,10 +26,10 @@ def gauss_elimination(matrix, n, output):
 
     if sem_solucao:
         output.insert(tk.END, "\nO sistema não possui solução.\n")
-        return
+        return False
     if infinitas:
         output.insert(tk.END, "\nO sistema possui infinitas soluções.\n")
-        return
+        return False
 
     x = [0 for _ in range(n)]
     for i in range(n - 1, -1, -1):
@@ -43,6 +43,7 @@ def gauss_elimination(matrix, n, output):
     for i in range(n):
         output.insert(tk.END, f"x{i + 1} = {x[i]:.2f}\n")
     output.insert(tk.END, "\n=== Fim do cálculo ===\n")
+    return True
 
 
 # Controle da interface
@@ -55,6 +56,7 @@ def iniciar():
             return
         entry_n.config(state="disabled")
         btn_iniciar.config(state="disabled")
+        btn_novo.pack_forget()
 
         # 🔹 Mostra instrução ANTES das equações
         label_instrucao.config(
@@ -99,13 +101,30 @@ def proxima_equacao():
 
 def resolver():
     output.delete("1.0", tk.END)
-    gauss_elimination(equacoes, n, output)
+    btn_resolver.pack_forget()
+    resultado = gauss_elimination(equacoes, n, output)
+
+    # Mostra o botão de novo sistema SEMPRE, mesmo se não houver solução
+    output.insert(tk.END, "\n-------------------------------\n")
+    output.insert(tk.END, "Cálculo finalizado.\n")
+    btn_novo.pack(pady=10)
+
+
+def novo_sistema():
+    # Reseta todos os campos e volta ao início
+    entry_n.config(state="normal")
+    entry_n.delete(0, tk.END)
+    btn_iniciar.config(state="normal")
+    label_instrucao.config(text="")
+    output.delete("1.0", tk.END)
+    btn_resolver.pack_forget()
+    btn_novo.pack_forget()
 
 
 # Configuração da janela principal
 janela = tk.Tk()
 janela.title("Resolução de Sistemas Lineares (Método de Gauss)")
-janela.geometry("640x650")
+janela.geometry("640x700")
 janela.configure(bg="#f4f4f8")
 
 # Cabeçalho
@@ -116,17 +135,17 @@ btn_iniciar = tk.Button(janela, text="Iniciar", command=iniciar, bg="#6A0DAD", f
                         font=("Arial", 10, "bold"), width=10)
 btn_iniciar.pack(pady=5)
 
-# 🔹 Label de instrução (agora será exibida logo após o botão Iniciar)
+# 🔹 Label de instrução
 label_instrucao = tk.Label(janela, text="", bg="#f4f4f8", font=("Arial", 10), fg="gray")
 
-# 🔹 Campo das equações (fica acima da saída)
+# 🔹 Campo das equações 
 frame_eq = tk.Frame(janela, bg="#f4f4f8")
 label_eq = tk.Label(frame_eq, text="", bg="#f4f4f8", font=("Arial", 10, "bold"))
 entry_eq = tk.Entry(frame_eq, width=30, font=("Courier New", 10))
 btn_proximo = tk.Button(frame_eq, text="Próxima", command=proxima_equacao, bg="#9370DB", fg="white",
                         font=("Arial", 9, "bold"), width=10)
 
-# 🔹 Label de saída (referência pra posicionar elementos)
+# 🔹 Label de saída
 label_saida = tk.Label(janela, text="Saída (passos e resultados):", bg="#f4f4f8", font=("Arial", 10, "bold"))
 label_saida.pack(pady=5)
 
@@ -135,8 +154,10 @@ output = scrolledtext.ScrolledText(janela, width=75, height=20, font=("Courier N
                                    bg="#1e1e1e", fg="#00FF00")
 output.pack(pady=5)
 
-# 🔹 Botão resolver (só aparece depois das equações)
+# 🔹 Botões inferiores
 btn_resolver = tk.Button(janela, text="Resolver", command=resolver, bg="#6A0DAD", fg="white",
                          font=("Arial", 10, "bold"), width=15)
+btn_novo = tk.Button(janela, text="Novo Sistema", command=novo_sistema, bg="#444444", fg="white",
+                     font=("Arial", 10, "bold"), width=15)
 
 janela.mainloop()

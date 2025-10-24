@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, scrolledtext
 
-# gauss_elimination
 # resolve um sistema linear por eliminação de Gauss com pivoteamento parcial.
 # recebe: matrix (matriz aumentada n x (n+1)), n (ordem), output (Text para escrever os passos)
 # retorna: True se houve solução única; False se sem solução ou infinitas soluções

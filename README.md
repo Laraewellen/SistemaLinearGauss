@@ -43,19 +43,19 @@ Abaixo estão as etapas que o usuário segue ao utilizar o programa:
 
 | Etapa | Descrição | Imagem |
 |:--:|:--|:--:|
-| **1** | Abra o programa e insira o número de variáveis. | ![1 - digitando vetor](img/1%20-%20digitando%20vetor.png) |
-| **2** | Clique em **Iniciar**. | ![2 - iniciando](img/2%20-%20iniciando.png) |
-| **3** | O campo para inserir a **1ª equação** será exibido. | ![3 - campo para inserir a 1ª equação](img/3%20-%20campo%20para%20inserir%20a%201ª%20equação.png) |
-| **4** | Leia a **instrução** e siga o exemplo mostrado. | ![4 - instrução](img/4%20-%20instrução.png) |
-| **5** | Digite a equação e clique em **Próxima**. | ![5 - insira a equação e clique em próxima](img/5%20-%20insira%20a%20equação%20e%20clique%20em%20próxima.png) |
-| **6** | Continue inserindo as equações até terminar. | ![6 - insira a outra equação e clique em próxima até acabar](img/6%20-%20insira%20a%20outra%20equação%20e%20clique%20em%20próxima%20até%20acabar.png) |
-| **7** | Após inserir todas, aparecerá o botão **Resolver**. | ![7 - assim que terminar de inserir aparecerá o botão enviar](img/7%20-%20assim%20que%20terminar%20de%20inserir%20aparecerá%20o%20botão%20enviar.png) |
-| **8** | Veja o **resultado do escalonamento**. | ![8 - resultado](img/8%20-%20resultado.png) |
-| **9** | O programa exibe a **continuação do resultado** e as soluções. | ![9 - continuação do resultado](img/9%20-%20continuação%20do%20resultado.png) |
-| **10** | Caso o sistema **não possua solução**, será informado. | ![10 - o sistema não possui solução](img/10%20-%20o%20sistema%20não%20possui%20solução.png) |
-| **11** | Caso o sistema **possua infinitas soluções**, também será exibido. | ![11 - o sistema possui infinitas soluções](img/11%20-%20o%20sistema%20possui%20infinitas%20soluções.png) |
-| **12** | Clique em **Novo Sistema** para resolver outro caso. | ![12 - clique em novo sistema](img/12%20-%20clique%20em%20novo%20sistema.png) |
-| **13** | Repita o processo quantas vezes desejar. | ![13 - repita](img/13%20-%20repita.png) |
+| **1** | Abra o programa e insira o número de variáveis. | ![1 - digitando vetor](imgs/1-%20digitando%20vetor.png) |
+| **2** | Clique em **Iniciar**. | ![2 - iniciando](imgs/2-%20iniciando.png) |
+| **3** | O campo para inserir a **1ª equação** será exibido. | ![3 - campo para inserir a 1ª equação](imgs/3-%20campo%20para%20inserir%20a%201ª%20equação.png) |
+| **4** | Leia a **instrução** e siga o exemplo mostrado. | ![4 - instrução](imgs/4%20-%20instrução.png) |
+| **5** | Digite a equação e clique em **Próxima**. | ![5 - insira a equação e clique em próxima](imgs/5-%20insira%20a%20equação%20e%20clique%20em%20proxima.png) |
+| **6** | Continue inserindo as equações até terminar. | ![6 - insira a outra equação e clique em próxima até acabar](imgs/6-%20insira%20a%20outra%20equação%20e%20clique%20em%20próxima,%20até%20acabar.png) |
+| **7** | Após inserir todas, aparecerá o botão **Resolver**. | ![7 - assim que terminar de inserir aparecerá o botão enviar](imgs/7-%20assim%20que%20terminar%20de%20inserir%20aparecerá%20o%20botão%20enviar.png) |
+| **8** | Veja o **resultado do escalonamento**. | ![8 - resultado](imgs/8-%20resultado.png) |
+| **9** | O programa exibe a **continuação do resultado** e as soluções. | ![9 - continuação do resultado](imgs/9-%20continuação%20do%20resultado.png) |
+| **10** | Caso o sistema **não possua solução**, será informado. | ![10 - o sistema não possui solução](imgs/10-%20o%20sistema%20não%20possui%20solução.png) |
+| **11** | Caso o sistema **possua infinitas soluções**, também será exibido. | ![11 - o sistema possui infinitas soluções](imgs/11-%20o%20sistema%20possui%20infinitas%20soluções.png) |
+| **12** | Clique em **Novo Sistema** para resolver outro caso. | ![12 - clique em novo sistema](imgs/12-%20clique%20em%20novo%20sistema.png) |
+| **13** | Repita o processo quantas vezes desejar. | ![13 - repita](imgs/13-%20repita.png) |
 
 ---
 
@@ -100,7 +100,7 @@ Entrada no programa:
 Abaixo está a documentação completa do projeto, com introdução teórica, explicação detalhada, código comentado e instruções de uso:
 
 <p align="center">
-  <img src="docs/Algoritmo%20de%20Resolução%20de%20Sistemas%20Lineares%20pelo%20Método%20de%20Gauss%20(com%20Pivoteamento%20Parcial)%20Lara%20Ewellen%20e%20Júlia%20Gabriela%20Gomes.png" width="700">
+  <img src="https://github.com/Laraewellen/SistemaLinearGauss/blob/73929b27b0e5e3e6851714ae4124b73b40ddf20a/Algoritmo%20de%20Resolu%C3%A7%C3%A3o%20de%20Sistemas%20Lineares%20pelo%20M%C3%A9todo%20de%20Gauss%20(com%20Pivoteamento%20Parcial)%20Lara%20Ewellen%20e%20J%C3%BAlia%20Gabriela%20Gomes.pdf" width="700">
 </p>
 
 ---

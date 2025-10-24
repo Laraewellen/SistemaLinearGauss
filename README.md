@@ -106,5 +106,5 @@ Abaixo está a documentação completa do projeto, com introdução teórica, ex
 ---
 
 <p align="center">
-  <b>💜 Projeto desenvolvido para fins acadêmicos 💜</b>
+  <b> Projeto desenvolvido para fins acadêmicos 💜</b>
 </p>

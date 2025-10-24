@@ -1,79 +1,142 @@
-# Resolução de Sistemas Lineares pelo Método de Gauss com Pivoteamento Parcial
-# Exibe a matriz após cada passo e detecta sistemas sem solução ou infinitas soluções
+import tkinter as tk
+from tkinter import messagebox, scrolledtext
 
-def gauss_elimination(matrix, n):
-    # Etapa 1: Escalonamento com pivoteamento parcial
+# Função principal: método de Gauss com pivoteamento parcial
+def gauss_elimination(matrix, n, output):
+    output.insert(tk.END, "\n=== Início do escalonamento ===\n")
     for i in range(n):
-        # Pivoteamento parcial: encontra o maior valor absoluto na coluna i
         max_row = i
         for k in range(i + 1, n):
             if abs(matrix[k][i]) > abs(matrix[max_row][i]):
                 max_row = k
-
-        # Troca de linhas se necessário
         if max_row != i:
             matrix[i], matrix[max_row] = matrix[max_row], matrix[i]
-
-        # Se o pivô for zero, pula a eliminação (tratará depois)
         if abs(matrix[i][i]) < 1e-9:
             continue
-
-        # Zera os elementos abaixo do pivô
         for j in range(i + 1, n):
             fator = matrix[j][i] / matrix[i][i]
             for k in range(i, n + 1):
                 matrix[j][k] -= fator * matrix[i][k]
-
-        # Exibe a matriz após cada passo
-        print(f"\nMatriz após o passo {i + 1}:")
+        output.insert(tk.END, f"\nMatriz após o passo {i + 1}:\n")
         for linha in matrix:
-            print(["{:.2f}".format(x) for x in linha])
+            output.insert(tk.END, f"{[f'{x:.2f}' for x in linha]}\n")
 
-    # Verifica linhas que indicam sistema impossível ou indeterminado
-    sem_solucao = False
-    infinitas = False
-    for i in range(n):
-        if all(abs(matrix[i][j]) < 1e-9 for j in range(n)) and abs(matrix[i][n]) > 1e-9:
-            sem_solucao = True
-        if all(abs(matrix[i][j]) < 1e-9 for j in range(n)) and abs(matrix[i][n]) < 1e-9:
-            infinitas = True
+    sem_solucao = any(all(abs(matrix[i][j]) < 1e-9 for j in range(n)) and abs(matrix[i][n]) > 1e-9 for i in range(n))
+    infinitas = any(all(abs(matrix[i][j]) < 1e-9 for j in range(n)) and abs(matrix[i][n]) < 1e-9 for i in range(n))
 
     if sem_solucao:
-        print("\nO sistema não possui solução.")
-        return None
+        output.insert(tk.END, "\nO sistema não possui solução.\n")
+        return
     if infinitas:
-        print("\nO sistema possui infinitas soluções.")
-        return None
+        output.insert(tk.END, "\nO sistema possui infinitas soluções.\n")
+        return
 
-    # Etapa 2: Substituição regressiva
     x = [0 for _ in range(n)]
     for i in range(n - 1, -1, -1):
         if abs(matrix[i][i]) < 1e-9:
             x[i] = 0
             continue
-        soma = 0
-        for j in range(i + 1, n):
-            soma += matrix[i][j] * x[j]
+        soma = sum(matrix[i][j] * x[j] for j in range(i + 1, n))
         x[i] = (matrix[i][n] - soma) / matrix[i][i]
-    return x
 
-# Entrada de dados
-n = int(input("Digite o número de variáveis (até 4): "))
-
-matrix = []
-print("Digite os coeficientes e o termo independente de cada equação:")
-for i in range(n):
-    linha = list(map(float, input(f"Equação {i + 1}: ").split()))
-    if len(linha) != n + 1:
-        print(f"Erro: você deve digitar {n + 1} números por linha.")
-        exit()
-    matrix.append(linha)
-
-# Resolução
-solucao = gauss_elimination(matrix, n)
-
-# Saída
-if solucao:
-    print("\nSoluções encontradas:")
+    output.insert(tk.END, "\nSoluções encontradas:\n")
     for i in range(n):
-        print(f"x{i + 1} = {solucao[i]:.2f}")
+        output.insert(tk.END, f"x{i + 1} = {x[i]:.2f}\n")
+    output.insert(tk.END, "\n=== Fim do cálculo ===\n")
+
+
+# Controle da interface
+def iniciar():
+    try:
+        global n, equacoes, etapa
+        n = int(entry_n.get())
+        if n < 1 or n > 4:
+            messagebox.showerror("Erro", "Digite um número entre 1 e 4.")
+            return
+        entry_n.config(state="disabled")
+        btn_iniciar.config(state="disabled")
+
+        # 🔹 Mostra instrução ANTES das equações
+        label_instrucao.config(
+            text=f"Digite os coeficientes e o termo independente de cada equação ({n}x{n}).\nExemplo: 2 1 -1 8"
+        )
+        label_instrucao.pack(pady=5)
+
+        # 🔹 Depois mostra o campo das equações
+        etapa = 1
+        equacoes = []
+        label_eq.config(text=f"Equação {etapa}:")
+        frame_eq.pack(before=label_saida, pady=8)
+        label_eq.pack()
+        entry_eq.pack(pady=3)
+        btn_proximo.pack()
+    except:
+        messagebox.showerror("Erro", "Digite um número válido de variáveis.")
+
+
+def proxima_equacao():
+    global etapa
+    texto = entry_eq.get().strip()
+    if not texto:
+        messagebox.showwarning("Atenção", "Digite os coeficientes e o termo independente.")
+        return
+    try:
+        linha = list(map(float, texto.split()))
+        if len(linha) != n + 1:
+            messagebox.showerror("Erro", f"Cada equação deve ter {n + 1} números (coeficientes + termo independente).")
+            return
+        equacoes.append(linha)
+        entry_eq.delete(0, tk.END)
+        if etapa < n:
+            etapa += 1
+            label_eq.config(text=f"Equação {etapa}:")
+        else:
+            frame_eq.pack_forget()
+            btn_resolver.pack(pady=10)
+    except:
+        messagebox.showerror("Erro", "Entrada inválida. Digite números separados por espaço.")
+
+
+def resolver():
+    output.delete("1.0", tk.END)
+    gauss_elimination(equacoes, n, output)
+
+
+# Configuração da janela principal
+janela = tk.Tk()
+janela.title("Resolução de Sistemas Lineares (Método de Gauss)")
+janela.geometry("640x650")
+janela.configure(bg="#f4f4f8")
+
+# Cabeçalho
+tk.Label(janela, text="Digite o número de variáveis (até 4):", bg="#f4f4f8", font=("Arial", 10, "bold")).pack(pady=5)
+entry_n = tk.Entry(janela, width=10, font=("Arial", 10))
+entry_n.pack()
+btn_iniciar = tk.Button(janela, text="Iniciar", command=iniciar, bg="#6A0DAD", fg="white",
+                        font=("Arial", 10, "bold"), width=10)
+btn_iniciar.pack(pady=5)
+
+# 🔹 Label de instrução (agora será exibida logo após o botão Iniciar)
+label_instrucao = tk.Label(janela, text="", bg="#f4f4f8", font=("Arial", 10), fg="gray")
+
+# 🔹 Campo das equações (fica acima da saída)
+frame_eq = tk.Frame(janela, bg="#f4f4f8")
+label_eq = tk.Label(frame_eq, text="", bg="#f4f4f8", font=("Arial", 10, "bold"))
+entry_eq = tk.Entry(frame_eq, width=30, font=("Courier New", 10))
+btn_proximo = tk.Button(frame_eq, text="Próxima", command=proxima_equacao, bg="#9370DB", fg="white",
+                        font=("Arial", 9, "bold"), width=10)
+
+# 🔹 Label de saída (referência pra posicionar elementos)
+label_saida = tk.Label(janela, text="Saída (passos e resultados):", bg="#f4f4f8", font=("Arial", 10, "bold"))
+label_saida.pack(pady=5)
+
+# 🔹 Área de saída (terminal visual)
+output = scrolledtext.ScrolledText(janela, width=75, height=20, font=("Courier New", 10),
+                                   bg="#1e1e1e", fg="#00FF00")
+output.pack(pady=5)
+
+# 🔹 Botão resolver (só aparece depois das equações)
+btn_resolver = tk.Button(janela, text="Resolver", command=resolver, bg="#6A0DAD", fg="white",
+                         font=("Arial", 10, "bold"), width=15)
+
+janela.mainloop()
